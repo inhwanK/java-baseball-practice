@@ -1,10 +1,8 @@
 package baseball.manage;
 
-import camp.nextstep.edu.missionutils.Console;
-import camp.nextstep.edu.missionutils.Randoms;
-
 // 게임을 관리하는 책임을 가짐.
 public class GameManager {
+    boolean finished = false;
     boolean restart = false;
     private String number;
 
@@ -21,7 +19,7 @@ public class GameManager {
     // 게임 시작
     public void start() {
         // 시작 메시지 출력
-        if(!restart) {
+        if (!restart) {
             gameStarter.printStartMessage();
         }
         // 3개의 임의의 숫자를 생성, 생성한 숫자 저장
@@ -33,13 +31,24 @@ public class GameManager {
     // 게임 진행
     private void process() {
         // 사용자로부터 숫자를 입력받음
-        gameProcessor.inputProcess();
-
-        // 숫자에 대한 결과를 출력함
+        while (!finished) {
+            String input = gameProcessor.inputProcess();
+            if (gameProcessor.guessNumber(number, input)) {
+                finished = true;
+            }
+        }
         // 종료 조건이 되면 게임 종료 요청 메시지를 보냄
+        finish();
     }
 
-    // 게임 종료
-        // 게임을 종료함.
-        // 게임 재시작 조건이 되면 시작 요청 메시지를 보냄
+    private void finish() {
+        // 게임 종료
+        int input = gameFinisher.inputFinishOrRestart();
+        if (input == 1) {
+            restart = true;
+            finished = false;
+            start();
+        }
+    }
+
 }

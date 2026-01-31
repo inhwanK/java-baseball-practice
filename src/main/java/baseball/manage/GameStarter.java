@@ -6,13 +6,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GameStarter {
-    StringBuilder sb = new StringBuilder();
+    private StringBuilder sb;
 
     public void printStartMessage() {
         System.out.println("숫자 야구 게임을 시작합니다.");
     }
 
     public String createNumber() {
+        sb = new StringBuilder();
         List<Integer> computer = new ArrayList<>();
         while (computer.size() < 3) {
             int randomNumber = Randoms.pickNumberInRange(1, 9);
